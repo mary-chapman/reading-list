@@ -3,6 +3,7 @@ select, option {
 }
 body {
   font-family: Bangers;
+  font-weight: 200;
   font-size: 2em;
 }
 #container {

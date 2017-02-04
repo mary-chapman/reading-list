@@ -30,14 +30,17 @@
         },
         render: function() {
             console.log(this.state.status)
+            //changes the class (bg color) based on the state status
             var classes = this.state.status === 'read' ? "bg-success book" : this.state.status === 'want' ? "bg-danger book" : "bg-info book"
             return (
 
               <div className={classes}>
+                  {/*props will eventually be set to the user input*/}
                   <div> {this.props.bookName} </div>
                   <form>
+                    {/*the value starts off as the initialized state and changes according to user input*/}
                     <select value={this.state.status} onChange={this.handleChange}>
-                      <option value='read'>Read</option>
+                      <option value='read'>Finised Reading</option>
                       <option value="reading">Reading Now</option>
                       <option value="want">Want to Read</option>
                     </select>
@@ -57,21 +60,25 @@
           }
         },
         handleSubmit: function(event) {
-          //
+          //if nothing is in the input field, the button does not do anything
           if (!this.refs.userInput.value) {
             return false;
           } else {
+            //copies the state
             var arr = this.state.books;
+            //pushes the user's input into the copy of the state array
             arr.push(this.refs.userInput.value);
+            //sets the new state of the updated copied array
             this.setState({ books: arr });
+            //sets the user input back to black
             document.getElementById("userText").value = '';
           }
         },
-        eachEntry: function(text, index) {
+        //maps though the book state array and creates an entry for each
+        eachEntry: function(item, index) {
           return (
             <Entry
               key={index} bookName={this.state.books[index]}>
-
             </Entry>
           )
 
@@ -84,6 +91,7 @@
                 { this.state.books.map(this.eachEntry) }
               </div>
                 <input ref="userInput" type="text" id="userText" />
+                {/* when the user clicks the button, their entry is added to the state */}
                 <button className="btn btn-primary" type="submit" onClick={this.handleSubmit}>ADD BOOK</button>
             </div>
           )
