@@ -1,0 +1,21 @@
+select, option {
+   display: inline;
+}
+body {
+  font-family: Bangers;
+  font-size: 2em;
+}
+#container {
+  text-align: center;
+}
+.book{
+  display: inline-block;
+  width: 60%;
+  margin: 1%;
+  padding: 1%;
+}
+@media (max-width: 600px) {
+  .book {
+    width: 100%;
+  }
+}

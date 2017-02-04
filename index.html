@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">
+    <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+
+  <body>
+
+    <div id="container">
+      <div id="app"></div>
+    </div>
+
+    <script type="text/babel">
+
+      var Entry = React.createClass({
+        getInitialState: function() {
+          return {
+            status: 'want'
+          }
+        },
+        handleChange: function(event) {
+          this.setState({ status: event.target.value})
+        },
+        render: function() {
+            console.log(this.state.status)
+            var classes = this.state.status === 'read' ? "bg-success book" : this.state.status === 'want' ? "bg-danger book" : "bg-info book"
+            return (
+
+              <div className={classes}>
+                  <div> {this.props.bookName} </div>
+                  <form>
+                    <select value={this.state.status} onChange={this.handleChange}>
+                      <option value='read'>Read</option>
+                      <option value="reading">Reading Now</option>
+                      <option value="want">Want to Read</option>
+                    </select>
+
+                  </form>
+              </div>
+
+            )
+        }
+      });
+
+      var Form = React.createClass({
+        getInitialState: function() {
+          //the user's book list in array form
+          return {
+            books: []
+          }
+        },
+        handleSubmit: function(event) {
+          //
+          if (!this.refs.userInput.value) {
+            return false;
+          } else {
+            var arr = this.state.books;
+            arr.push(this.refs.userInput.value);
+            this.setState({ books: arr });
+            document.getElementById("userText").value = '';
+          }
+        },
+        eachEntry: function(text, index) {
+          return (
+            <Entry
+              key={index} bookName={this.state.books[index]}>
+
+            </Entry>
+          )
+
+        },
+        render: function() {
+          return (
+            <div>
+              <h1>Book List</h1>
+              <div>
+                { this.state.books.map(this.eachEntry) }
+              </div>
+                <input ref="userInput" type="text" id="userText" />
+                <button className="btn btn-primary" type="submit" onClick={this.handleSubmit}>ADD BOOK</button>
+            </div>
+          )
+        }
+      })
+
+      ReactDOM.render(
+        <Form />,
+        document.getElementById('app')
+      );
+
+    </script>
+    <script
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>
